@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Expense Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-yellow-100 font-sans">
+
+  <!-- Title -->
+  <h1 class="text-4xl font-bold text-center mt-10 text-[#F9844A] drop-shadow-sm">
+    💸 Expense Tracker
+  </h1>
+
+  <!-- Form -->
+  <form action="/add" method="post" class="w-full max-w-lg mx-auto mt-10 px-4 space-y-6">
+
+    <!-- Expense Name -->
+    <input 
+      type="text" 
+      name="expence" 
+      placeholder="What did you spend on?"  
+      class="border border-[#43AA8B] rounded-xl bg-[#F9C74F] text-[#577590] w-full h-12 px-4 text-lg placeholder-[#577590] focus:outline-none focus:ring-2 focus:ring-[#F9844A] shadow-sm"
+    />
+
+    <!-- Amount + Button Row -->
+    <div class="flex gap-4 items-center">
+      <input 
+        type="number" 
+        name="amount" 
+        placeholder="₹ Amount" 
+        class="border border-[#43AA8B] rounded-xl w-full h-12 px-4 text-lg bg-[#F9C74F] text-[#577590] placeholder-[#577590] focus:outline-none focus:ring-2 focus:ring-[#F9844A] shadow-sm"
+      />
+
+      <button 
+        type="submit" 
+        class="bg-[#F9844A] text-white font-bold px-6 py-2 rounded-xl hover:bg-[#F8961E] transition duration-200 shadow-md"
+      >
+        Add
+      </button>
+    </div>
+  </form>
+
+  <!-- Transaction History -->
+  <h2 class="text-2xl font-semibold text-center mt-12 text-[#F8961E]">📜 Transaction History</h2>
+
+  <ul class="mt-6 px-4 space-y-4 max-w-lg mx-auto max-h-96 overflow-y-auto">
+
+    <% if (exp.length === 0) { %>
+      <li class="bg-[#F9C74F] text-[#577590] border border-[#43AA8B] rounded-xl py-3 text-center text-lg shadow-sm">
+        No transactions yet 💤
+      </li>
+    <% } else { %>
+      <% exp.forEach(exp => { %>
+        <li class="flex <%= exp.amount < 0 ? 'justify-start' : 'justify-end' %>">
+          <div class="<%= exp.amount < 0 ? 'bg-[#F9844A]' : 'bg-[#90BE6D]' %> text-white rounded-2xl px-4 py-3 max-w-[80%] shadow-md relative">
+
+            <!-- Expense Details -->
+            <p class="text-base font-semibold break-words">
+              <%= exp.expence %> : ₹<%= exp.amount %>
+            </p>
+
+            <!-- Timestamp -->
+            <span class="absolute bottom-0 right-3 text-xs text-white/80">
+              <%= exp.time.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) %>
+            </span>
+          </div>
+        </li>
+      <% }); %>
+    <% } %>
+  </ul>
+
+
+</body>
+</html>
