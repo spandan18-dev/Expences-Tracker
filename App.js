@@ -7,8 +7,7 @@ import { join } from 'path';
 const app = express()
 
 const port = process.env.PORT
-const dburl = process.env.MONGODB_URL
-connectdb(dburl)
+connectdb()
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
