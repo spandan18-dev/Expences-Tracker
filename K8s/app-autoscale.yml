@@ -1,0 +1,20 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: expence-tracker-hpa
+  namespace: expence-tracker-ns
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: expence-tracker-deploy
+    apiVersion: apps/v1
+  minReplicas: 2
+  maxReplicas: 10
+
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
