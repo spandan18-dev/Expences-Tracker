@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expence-tracker-deploy 
+  namespace: expence-tracker-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: expence-app
+  template:
+    metadata:
+      labels:
+        app: expence-app
+    spec:
+      containers:
+        - name: expence-app
+          image: spandan735/expence-tracker-k8s:v1
+          ports:
+            - containerPort: 8000
+          env:
+            -  name: PORT 
+               value: "8000"
+            -  name: MONGODB_URL
+               value : "mongodb://mongo-service:27017/expences"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+
